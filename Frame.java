@@ -1,6 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-public class GUI{
+public class Frame{
 	public static void main(String[] args) {
 		JFrame f = new JFrame();
 		JButton d4 = new JButton("D4");
@@ -9,4 +9,5 @@ public class GUI{
 		f.getContentPane().add(BorderLayout.NORTH, d4);
 		f.setVisible(true);
 	}
+
 }
