@@ -103,20 +103,56 @@ public class Roll {
         
     }
 
-    public static int roll(Roll r)
+    public static void rollDice(Roll r)
     {
-        if(r.upperLimit == 100)
+        for(int count = 0; count < r.numOfDice; count++)
         {
-            r.roll = (int)(Math.random() * (r.upperLimit - 1));
-            r.roll += r.modifier;
-            return r.roll;
-        }
+            if(r.upperLimit == 100)
+            {
+                r.roll = (int)(Math.random() * (r.upperLimit - 1));
+                r.roll += r.modifier;
+                System.out.println("You rolled a: " + r.roll);
+            }
 
-        else
-        {
-            r.roll = (int)(Math.random() * (r.upperLimit - 1)) + 1;
-            r.roll += r.modifier;
-            return r.roll;
+            else
+            {
+                r.roll = (int)(Math.random() * (r.upperLimit - 1)) + 1;
+                r.roll += r.modifier;
+                System.out.println("You rolled a: " + r.roll);
+            }
         }
     }
+
+    public static void rollAdvantage(Roll r)
+    {
+        for(int count = 0; count < r.numOfDice; count++)
+        {
+            int temp = (int) (Math.random() * (r.upperLimit - 1)) + 1;
+            r.roll = (int) (Math.random() * (r.upperLimit - 1)) + 1;
+
+            if (temp >= r.roll)
+            {
+                r.roll = temp;
+            }
+
+            System.out.println("Your roll with advantage is: " + r.roll);
+        }
+    }
+
+    public static void rollDisadvantage(Roll r)
+    {
+       for(int count = 0; count < r.numOfDice; count++)
+       {
+           int temp = (int) (Math.random() * (r.upperLimit - 1)) + 1;
+           r.roll = (int) (Math.random() * (r.upperLimit - 1)) + 1;
+
+           if (temp <= r.roll)
+           {
+               r.roll = temp;
+           }
+
+           System.out.println("Your roll with disadvantage is: " + r.roll);
+       }
+    }
+
 }
