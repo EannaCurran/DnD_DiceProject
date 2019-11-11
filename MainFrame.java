@@ -43,7 +43,7 @@ public class MainFrame{
       ModifierText.addKeyListener(new KeyAdapter() {
            public void keyPressed(KeyEvent key) {
               String value = ModifierText.getText();
-              if ((key.getKeyChar() >= '0' && key.getKeyChar() <= '9') || key.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+              if ((key.getKeyChar() >= '0' && key.getKeyChar() <= '9') || key.getKeyCode() == KeyEvent.VK_BACK_SPACE || key.getKeyCode() == '-') {
                  ModifierText.setEditable(true);
               } else {
                  ModifierText.setEditable(false);
@@ -58,7 +58,7 @@ public class MainFrame{
           }
           RollList.append(String.valueOf(DiceBox.getSelectedItem()) + " X " + RollText.getText());
           if(!(ModifierText.getText().equals(""))){
-              RollList.append(" +"+ModifierText.getText() + "\n");
+              RollList.append(" Modifier: "+ModifierText.getText() + "\n");
           }
           else{
               RollList.append("\n");
