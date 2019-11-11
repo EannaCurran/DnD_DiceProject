@@ -9,24 +9,6 @@ public class Roll {
     protected int total;
     protected int grandTotal;
 
-    public Roll(int uL, int nOD, int m) throws IllegalArgumentException
-    {
-        upperLimit = uL;
-        numOfDice = nOD;
-        modifier = m;
-
-        if(uL > 1000 || uL < 0)
-        {
-            throw new IllegalArgumentException("ERROR: Invalid value entered, must be between 0 and 1000");
-        }
-
-        if(nOD < 0)
-        {
-            throw new IllegalArgumentException("ERROR: Invalid value entered, must be above 0");
-        }
-    } //Constructor
-
-
     public int getUpperLimit()
     {
         return upperLimit;
@@ -100,61 +82,131 @@ public class Roll {
 
 
     public static void main(String[] args) {
-        
+
     }
 
-    public static void rollDice(Roll r)
+    public String rollDice(String input)
     {
-        for(int count = 0; count < r.numOfDice; count++)
+        int mid_point = input.indexOf('X');
+        int d_location = input.indexOf('D');
+        int m_location = input.indexOf(':');
+        String output = "";
+
+        setUpperLimit(Integer.parseInt(input.substring(d_location + 1, mid_point).trim()));
+        setNumOfDice(Integer.parseInt(input.substring(mid_point + 1, 'X' - 1).trim()));
+
+        if(input.contains("-"))
         {
-            if(r.upperLimit == 100)
+            setModifier(Integer.parseInt(input.substring(m_location + 2, input.length()).trim()));
+            setModifier(modifier * -1);
+        }
+
+        else
+        {
+            setModifier(Integer.parseInt(input.substring(m_location + 1, input.length()).trim()));
+        }
+
+        for(int count = 0; count < numOfDice; count++)
+        {
+            if(upperLimit == 100)
             {
-                r.setRoll((int)(Math.random() * (r.upperLimit - 1)));
-                r.roll += r.modifier;
-                r.total += r.roll;
-                System.out.println("You rolled a: " + r.roll);
+                setRoll((int)(Math.random() * (upperLimit - 1)));
+                roll += modifier;
+                total += roll;
+                output += "D" + upperLimit + "number" + count + "rolled: " + roll + '\n';
+
             }
 
             else
             {
-                r.setRoll((int)(Math.random() * (r.upperLimit - 1)) + 1);
-                r.roll += r.modifier;
-                r.total += r.roll;
-                System.out.println("You rolled a: " + r.roll);
+                setRoll((int)(Math.random() * (upperLimit - 1)) + 1);
+                roll += modifier;
+                total += roll;
+                output += "D" + upperLimit + "number" + count + "rolled: " + roll + '\n';
             }
         }
+
+        output += "Your total is: " + total;
+
+        return output;
     }
 
-    public static void rollAdvantage(Roll r)
+    public String rollAdvantage(String input)
     {
-        for(int count = 0; count < r.numOfDice; count++)
+        int mid_point = input.indexOf('X');
+        int d_location = input.indexOf('D');
+        int m_location = input.indexOf(':');
+        String output = "";
+
+        setUpperLimit(Integer.parseInt(input.substring(d_location, mid_point).trim()));
+        setNumOfDice(Integer.parseInt(input.substring(mid_point, '+' - 1).trim()));
+
+        if(input.contains("-"))
         {
-            int temp = (int) (Math.random() * (r.upperLimit - 1)) + 1;
-            r.setRoll((int) (Math.random() * (r.upperLimit - 1)) + 1);
-
-            if (temp >= r.roll)
-            {
-                r.setRoll(temp);
-                r.total += r.roll;
-            }
-            System.out.println("Your roll with advantage is: " + r.roll);
+            setModifier(Integer.parseInt(input.substring(m_location + 2, input.length()).trim()));
+            setModifier(modifier * -1);
         }
+
+        else
+        {
+            setModifier(Integer.parseInt(input.substring(m_location + 1, input.length()).trim()));
+        }
+
+        for(int count = 0; count < numOfDice; count++)
+        {
+            int temporary = (int) (Math.random() * (upperLimit - 1)) + 1;
+            setRoll((int) (Math.random() * (upperLimit - 1)) + 1);
+
+            if (temporary >= roll)
+            {
+                setRoll(temporary);
+                total += roll;
+            }
+            output += "Your roll with advantage was: " + roll + '\n';
+        }
+
+        output += "Your total is: " + total;
+        return output;
     }
 
-    public static void rollDisadvantage(Roll r)
+    public String rollDisadvantage(String input)
     {
-       for(int count = 0; count < r.numOfDice; count++)
-       {
-           int temp = (int) (Math.random() * (r.upperLimit - 1)) + 1;
-           r.setRoll((int) (Math.random() * (r.upperLimit - 1)) + 1);
+        int mid_point = input.indexOf('X');
+        int d_location = input.indexOf('D');
+        int m_location = input.indexOf(':');
+        String output = "";
 
-           if (temp <= r.roll)
+        setUpperLimit(Integer.parseInt(input.substring(d_location, mid_point).trim()));
+        setNumOfDice(Integer.parseInt(input.substring(mid_point, '+' - 1).trim()));
+
+        if(input.contains("-"))
+        {
+            setModifier(Integer.parseInt(input.substring(m_location + 2, input.length()).trim()));
+            setModifier(modifier * -1);
+        }
+
+        else
+        {
+            setModifier(Integer.parseInt(input.substring(m_location + 1, input.length()).trim()));
+        }
+
+
+
+        for(int count = 0; count < numOfDice; count++)
+        {
+           int temporary = (int) (Math.random() * (upperLimit - 1)) + 1;
+           setRoll((int) (Math.random() * (upperLimit - 1)) + 1);
+
+           if (temporary <= roll)
            {
-               r.setRoll(temp);
-               r.total += r.roll;
+               setRoll(temporary);
+               total += roll;
            }
-           System.out.println("Your roll with disadvantage is: " + r.roll);
-       }
+            output += "Your roll with disadvantage was: " + roll + '\n';
+        }
+
+        output += "Your total is: " + total;
+        return output;
     }
 
 }
