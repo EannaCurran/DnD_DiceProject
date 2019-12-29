@@ -1,4 +1,3 @@
-package com.company.Projects;
 import java.lang.Math;
 
 public class Roll {
@@ -6,7 +5,7 @@ public class Roll {
     protected int numOfDice;
     protected int roll;
     protected int modifier;
-    protected int total;
+    protected int total = 0;
     protected int grandTotal;
 
     public int getUpperLimit()
@@ -80,53 +79,45 @@ public class Roll {
         this.grandTotal = grandTotal;
     } //Mutator
 
-
-    public static void main(String[] args) {
-
-    }
-
     public String rollDice(String input)
     {
         int mid_point = input.indexOf('X');
         int d_location = input.indexOf('D');
         int m_location = input.indexOf(':');
         String output = "";
+        System.out.println(input);
 
         setUpperLimit(Integer.parseInt(input.substring(d_location + 1, mid_point).trim()));
-        setNumOfDice(Integer.parseInt(input.substring(mid_point + 1, 'X' - 1).trim()));
+        setNumOfDice(Integer.parseInt(input.substring(mid_point+2, mid_point+3).trim()));
+        System.out.println(this.numOfDice);
 
-        if(input.contains("-"))
+        if(input.contains(":"))
         {
             setModifier(Integer.parseInt(input.substring(m_location + 2, input.length()).trim()));
             setModifier(modifier * -1);
         }
 
-        else
-        {
-            setModifier(Integer.parseInt(input.substring(m_location + 1, input.length()).trim()));
-        }
-
-        for(int count = 0; count < numOfDice; count++)
+        for(int count = 0; count < numOfDice ; count++)
         {
             if(upperLimit == 100)
             {
                 setRoll((int)(Math.random() * (upperLimit - 1)));
                 roll += modifier;
-                total += roll;
+                this.total += roll;
                 output += "D" + upperLimit + "number" + count + "rolled: " + roll + '\n';
-
+                System.out.println(output);
             }
 
             else
             {
                 setRoll((int)(Math.random() * (upperLimit - 1)) + 1);
                 roll += modifier;
-                total += roll;
-                output += "D" + upperLimit + "number" + count + "rolled: " + roll + '\n';
+                this.total += roll;
+                output += "D" + upperLimit + " number " + count + "rolled: " + roll + '\n';
             }
         }
 
-        output += "Your total is: " + total;
+        output += "Your total is: " + this.total;
 
         return output;
     }

@@ -29,6 +29,7 @@ public class MainFrame{
     JButton AddButton = new JButton("Add");
     JButton RollButton = new JButton("Roll");
 
+
     RollText.addKeyListener(new KeyAdapter() {
          public void keyPressed(KeyEvent key) {
             String value = RollText.getText();
@@ -69,9 +70,11 @@ public class MainFrame{
     RollButton.addActionListener(new ActionListener(){
         public void actionPerformed(ActionEvent e){
           JFrame AnswerFrame = new JFrame("Results");
-          JTextArea RollResult = new JTextArea(RollList.getText());
+          Roll Dice = new Roll();
 
-          RollResult.setLineWrap(true);
+          JTextArea RollResult = new JTextArea(Dice.rollDice(RollList.getText()));
+
+          RollResult.setLineWrap(false);
           RollResult.setEditable(false);
 
           AnswerFrame.setLayout(new FlowLayout());
